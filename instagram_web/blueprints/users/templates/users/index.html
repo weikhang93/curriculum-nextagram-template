@@ -1,0 +1,18 @@
+{%extends "_layout.html"%}
+{%block content%}
+{%for user in users%}
+<li>
+    <a href="{{url_for('users.show' , username=user.username)}}">
+
+        {{user.username}}
+
+    </a>
+
+</li>
+{% endfor%}
+
+<!-- <form action="{{url_for('users.update', id=1)}}" method="POST">
+    <input type="submit" value="Update"/>
+</form> -->
+
+{% endblock%}

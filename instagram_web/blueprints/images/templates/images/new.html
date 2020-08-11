@@ -1,0 +1,20 @@
+{% extends "_layout.html"%}
+
+{%block content%}
+<h1>Upload your images</h1>
+
+<hr>
+<br>
+<form action="{{url_for('images.create')}}" method="POST" enctype="multipart/form-data">
+    <label>Select your image files :</label>
+    <input type="file" name="images">
+    <input type="submit" value="Upload">
+
+
+
+
+
+</form>
+
+
+{% endblock%}

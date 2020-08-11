@@ -1,0 +1,56 @@
+{% extends "_layout.html"%}
+
+{%block content%}
+
+<h1>Welcome {{user.username}} !</h1>
+
+{% if user.image_path %}
+    <img src="{{user.full_image_path}}" />
+
+{% else %}
+
+
+    <img src="https://nextagram-profile-image.s3-ap-southeast-1.amazonaws.com/genius.gif" />
+
+
+{% endif %}
+<div>
+    {% if current_user.id==user.id %} 
+    <a href="{{url_for('images.new')}}"><h1>Add Images</h1></a>
+    {% endif %}
+</div> 
+
+<div class="container">
+    <div class="row">
+        {% for image in user.images %}
+            
+            <div class="col-4" style="padding-bottom: 10px;">
+                <a href="{{url_for('donations.index' , image_id=image.id)}}">
+
+
+                    <img src="{{image.full_image_url}}" width="100%" >
+                </a>
+                <a href="{{url_for('donations.new' , image_id=image.id)}}">
+
+
+                    <button class="btn btn-primary" >Donate</button>
+                </a>
+
+            </div>
+
+
+        {% endfor%}
+        
+        
+        
+
+
+
+    </div>
+
+</div>
+
+
+
+
+{% endblock%}

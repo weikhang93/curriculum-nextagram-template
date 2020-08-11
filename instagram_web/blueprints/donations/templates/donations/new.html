@@ -1,0 +1,46 @@
+<head>
+    <meta charset="utf-8">
+    <script src="https://js.braintreegateway.com/web/dropin/1.23.0/js/dropin.min.js"></script>
+  </head>
+  <body>
+    <form action="{{url_for('donations.create' , image_id=image_id)}}" method="POST" id="payment-form">
+        <label for="amount">Enter the amount to donate</label>
+        <input type="text" name="amount">
+
+        <input type="hidden"  name="payment_method_nonce" id="nonce">
+
+
+
+
+        <div id="dropin-container"></div>
+        <button id="submit-button">Request payment method</button>
+    </form>
+
+    <script>
+      var button = document.querySelector('#submit-button');
+      var form = document.querySelector('#payment-form');
+        
+    // //   instance is something from braintree
+    // when we click the request payment methods, its gonna trigger
+    // the method of .requestPaymentMethod and send it to the braintree 
+    // server, then the response will be the payload, which contain
+    // the nonce , to access the nonce, we have to use payload.nonce, 
+    // then we can send it to the form... and then retrieve at views.py 
+
+
+      braintree.dropin.create({
+        authorization: '{{client_token}}',
+        container: '#dropin-container'
+      }, function (createErr, instance) {
+        button.addEventListener('click', function (event) {
+            event.preventDefault()
+            instance.requestPaymentMethod(function (err, payload) {
+                document.querySelector("#nonce").value= payload.nonce;
+                console.log(payload)
+                form.submit()
+                // Submit payload.nonce to your server
+            });
+        });
+      });
+    </script>
+  </body>
