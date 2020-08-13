@@ -13,6 +13,7 @@ class User(UserMixin,BaseModel):
     hashed_password=pw.CharField(null=False)
     password=None
     image_path=pw.TextField(null=True)
+    is_private=pw.BooleanField(default=True)
     
 
     @hybrid_property

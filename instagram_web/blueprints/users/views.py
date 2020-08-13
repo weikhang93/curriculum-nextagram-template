@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash
 from flask_login import login_required,current_user
 from instagram_web.util.helpers import upload_file_s3
 from werkzeug import secure_filename
-
+from models.fanidol import FanIdol
 users_blueprint = Blueprint('users',
                             __name__,
                             template_folder='templates')
@@ -58,9 +58,7 @@ def index():
 def edit(id):
     return render_template('/users/edit.html')
 
-# @users_blueprint.route('blabla' methods=["GET"])
-# def image_upload():
-#     return render_template('users/profile_image.html')
+
 
 
 @users_blueprint.route('/<id>', methods=['POST'])
@@ -129,8 +127,68 @@ def upload_profile_image(id):
         flash("NO SUCH USER! DON'T try to be cute please")
         return redirect(url_for('home'))
 
-        
-        
+# @users_blueprint.route('/follow/<id>')
+# def follow(id):
+#     user=User.get_by_id(id)
+
+#     user.is_private=False
+#     user.save()
+#     return "hehehe"
+
+@users_blueprint.route('/private' , methods=["POST"])
+def private():
+    ticks=request.form.get("is_private")
+    user=User.get_or_none(User.id== current_user.id)
+
+    if ticks=="Ticked":
+        user.is_private=True
+        user.save()
+        flash("Your profile is now private!" , "primary")
+        return redirect(url_for('users.show' , username=current_user.username))
+    else:
+        user.is_private=False
+        user.save()
+        flash("Your profile is now public" , "primary")
+        return redirect(url_for('users.show' , username=current_user.username))
+
+    
+    
+
+# We hav to put <id> as our route params because we want to know which user to follow
+# in our view function later, without the params, the view function will have no access
+# to the id that is passed down from the url_for.
+# and the reason we put <id> infront of /follow instead of /follow/<id> is because of
+#Restful convention. cause even if we put /follow/<id> we should also be able to interpret it.
+@users_blueprint.route('<id>/follow/' , methods=["POST"])
+def follow(id):
+    for fanidolrow in current_user.idol:
+        print(type(fanidolrow.idol))
+        print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+        print(type(fanidolrow.idol_id))
+        print(type(current_user))
+        print(User)
+
+
+    fanidol=FanIdol(fan=current_user.id, idol=id)
+
+    fanidol.save()
+
+
+    
+    
+
+    return "LALALA"
+
+
+
+
+
+@users_blueprint.route('/unfollow' , methods=["POST"])
+def unfollow():
+    pass
+
+
+
         
 
 

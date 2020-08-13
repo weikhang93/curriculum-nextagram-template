@@ -49,7 +49,7 @@ def authorize():
         return redirect(url_for('users.show' , username=user.username))
 
     else:
-        flash("EITHER U HAVE NO GOOGLE ACCOUNT OR YOU DON'T HAVE NEXTAGRAM ACCOUNT..... but either way... U SUPER NOOB!", "danger")
+        flash("EITHER U HAVE NO GOOGLE ACCOUNT OR YOU DON'T HAVE NEXTAGRAM ACCOUNT..... but either way... PLEASE FUCK OFF LA", "danger")
         return redirect(url_for('sessions.new'))
 
 

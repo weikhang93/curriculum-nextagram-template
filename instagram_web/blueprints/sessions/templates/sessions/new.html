@@ -19,9 +19,18 @@
   <br>
   <br>
   <br>
-  <hr>
+  
 
-  <a href="{{url_for('sessions.google_login')}}">Login Using Google</a>
+  <a href="{{url_for('sessions.google_login')}}">
+    {# the reason why i don't have to specify instagram_web as my path is because at app.py, we are setting the roothpath for the app to be starting from instagram_web ( 
 
-  <hr>
+      web_dir = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), 'instagram_web')
+    
+    ) but when i import something at the top of any py.script file, it is starting from curriculum-nextagram-template #}
+    <img src="/static/images/btn_google_signin_light_normal_web2x.png" alt="GOOGLE LOGIN BUTTON">
+
+  </a>
+
+  
 {%endblock%}

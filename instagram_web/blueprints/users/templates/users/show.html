@@ -18,13 +18,77 @@
     {% if current_user.id==user.id %} 
     <a href="{{url_for('images.new')}}"><h1>Add Images</h1></a>
     {% endif %}
+
+
+    
+    {% for fanidolrow in current_user.idol %}
+    {% if user==fanidolrow.idol %}
+    <h1>testing</h1>
+
+    the reason why fanidolrow.idol_id and fanidolrow.idol will also print out 4 in my html... is because of the __repl__/__str__ thingy on an class
+    {{fanidolrow.idol_id}}
+    {{fanidolrow.idol}}
+    <form action="{{url_for('users.follow' , id=user.id)}}" method="POST">
+        <button>FOLLOWED</button>
+    </form>
+
+    
+    {% else %}
+    {{fanidolrow.idol}}
+
+
+
+
+    {% endif %}
+    {% endfor %}
+
+    
+    {% if current_user.id !=user.id%}
+
+    <form action="{{url_for('users.follow' , id=user.id)}}" method="POST">
+        <button>FOLLOW ME BABEH</button>
+    </form>
+
+    {% endif %}
+
+
+        
+    
+    {% if user.is_private   %}
+    <h1>Please follow me pleaseeeeeeeeeeeee </h1>
+    <br>
+    {# url_for doesn't actually go to the view function, it actually just return a strings, and check for the route, so the logic is like this, first it check is there a "follow" view function, then it will find create/generate the route, and whenever we pass in something using url_for, the first thing that receive the props is the route, if the route don't have the <id params> , then some error will pop up, the next thing is after the route got the id, we must also include the id as an arguement for the following view function. #}
+
+
+
+
+
+    {% else %}
+
+
+
+
+
 </div> 
 
-<div class="container">
+<div class="containe d-flex mx-3" style="width:80%; justify-content: center;">
     <div class="row">
         {% for image in user.images %}
             
+        <div class="card" style="width: 18rem;">
+            <a href="{{url_for('donations.index' , image_id=image.id)}}"></a>
+            <img src="{{image.full_image_url}}"" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some example text.</p>
+              <a href="{{url_for('donations.new' , image_id=image.id)}}"></a>
+              <a href="#" class="btn btn-primary">
+                Go somewhere
+              </a>
+            </div>
+          </div>
             <div class="col-4" style="padding-bottom: 10px;">
+
                 <a href="{{url_for('donations.index' , image_id=image.id)}}">
 
 
@@ -50,6 +114,8 @@
 
 </div>
 
+    {% endif %}
+    
 
 
 
