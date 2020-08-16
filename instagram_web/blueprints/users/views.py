@@ -30,7 +30,7 @@ def create():
         for error in new_user.errors:
             flash(error)
 
-        return render_template('users/new.html')
+        return render_template('users/new.html', username=username, email=email)
 
 
 @users_blueprint.route('/<username>', methods=["GET"])

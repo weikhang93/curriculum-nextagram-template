@@ -72,3 +72,10 @@ def index(image_id):
 
 
     return render_template("/donations/index.html" , image=image)
+
+@donations_blueprint.route('<row>/testing/')
+def testing(row,image_id):
+    print("XXXXXXXXXXXXXXXXOOOOOOOOOOOOOOOOOOOOOOXXXXXXXXXXXXXXXXXXXXX")
+    print (type(row))
+
+    return "TESTING for backref"

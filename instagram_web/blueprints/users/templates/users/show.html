@@ -25,14 +25,17 @@
     {% if user==fanidolrow.idol %}
     <h1>testing</h1>
 
-    the reason why fanidolrow.idol_id and fanidolrow.idol will also print out 4 in my html... is because of the __repl__/__str__ thingy on an class
+    {# the reason why fanidolrow.idol_id and fanidolrow.idol will also print out 4 in my html... is because of the __repl__/__str__ methods under a class. when i use {{}} it is trying to print out sth. 
+    REMEMBER that if we set it up as an object at our table(in this case it is fanidol.py), the attribute of the instance will give us an Object. We set 
+    idol=pw.ForeignKeyField(User, backref="fan"), therefore fanidolinstance.idol will always give us an user Object #}
+
     {{fanidolrow.idol_id}}
     {{fanidolrow.idol}}
     <form action="{{url_for('users.follow' , id=user.id)}}" method="POST">
         <button>FOLLOWED</button>
     </form>
 
-    
+    {% break %}
     {% else %}
     {{fanidolrow.idol}}
 
@@ -75,7 +78,7 @@
     <div class="row">
         {% for image in user.images %}
             
-        <div class="card" style="width: 18rem;">
+        <!-- <div class="card" style="width: 18rem;">
             <a href="{{url_for('donations.index' , image_id=image.id)}}"></a>
             <img src="{{image.full_image_url}}"" class="card-img-top" alt="...">
             <div class="card-body">
@@ -86,7 +89,7 @@
                 Go somewhere
               </a>
             </div>
-          </div>
+          </div> -->
             <div class="col-4" style="padding-bottom: 10px;">
 
                 <a href="{{url_for('donations.index' , image_id=image.id)}}">

@@ -51,7 +51,7 @@ class User(UserMixin,BaseModel):
         ##password=request.form.get('password'), even if user key'ed in nothing, the form will return an "" empty string.
         if self.password:
             if len(self.password)<=5:
-                self.errors.append(f"Please input more than 6 characters")
+                self.errors.append(f"Please input more than 6 characters for username")
 
 
             has_lower = re.search(r"[a-z]", self.password)

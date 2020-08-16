@@ -7,7 +7,16 @@
 <ul>
   <!-- for shit in image.donations
   li shit.sender li -->
+    {% for donationrow in image.abc %}
+    <li>
+      {{donationrow.sender.username}} has donated {{donationrow.amount}} to {{donationrow.image.user.username}}'s image(image_id={{donationrow.image.id}}).
+
+    </li>
+
+
+    {% endfor %}
 </ul>
+
 
 
 
