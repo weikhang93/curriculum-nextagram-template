@@ -64,7 +64,7 @@ def create(image_id):
 
     print(result)
 
-    return "hehehe" 
+    return redirect(url_for('donations.index' , image_id=image_id))
 
 @donations_blueprint.route('/')
 def index(image_id):

@@ -57,7 +57,7 @@
 
         
     
-    {% if user.is_private   %}
+    {% if user.is_private and current_user.id!=user.id %}
     <h1>Please follow me pleaseeeeeeeeeeeee </h1>
     <br>
     {# url_for doesn't actually go to the view function, it actually just return a strings, and check for the route, so the logic is like this, first it check is there a "follow" view function, then it will find create/generate the route, and whenever we pass in something using url_for, the first thing that receive the props is the route, if the route don't have the <id params> , then some error will pop up, the next thing is after the route got the id, we must also include the id as an arguement for the following view function. #}

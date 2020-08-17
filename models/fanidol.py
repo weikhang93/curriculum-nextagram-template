@@ -12,6 +12,12 @@ class FanIdol(BaseModel):
     fan=pw.ForeignKeyField(User, backref="idol")
     is_approved=pw.BooleanField(default=False)
 
+    class Meta:
+        indexes=(
+            (('idol','fan'),True),
+        )
+    
+
 
   
 
