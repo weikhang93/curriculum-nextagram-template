@@ -41,9 +41,19 @@ def create():
 #Another thing to remember is that if we want to use username, we have to make sure the username Unique=True at our User model
 def show(username):
     print(__name__)
+    x=1
+    y=0
     user=User.get_or_none(User.username==username)
+    for fanidolrow in current_user.idol:
+        if fanidolrow.idol.id==user.id:
+            x=0
+            if fanidolrow.is_approved==True:
+                y=1
+            break
+    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    print(x)
 
-    return render_template("/users/show.html", user=user)
+    return render_template("/users/show.html", user=user,x=x , y=y)
 
 
 @users_blueprint.route('/', methods=["GET"])

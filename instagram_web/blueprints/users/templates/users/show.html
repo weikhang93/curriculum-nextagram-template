@@ -5,24 +5,26 @@
 <h1>Welcome {{user.username}} !</h1>
 
 {% if user.image_path %}
-    <img src="{{user.full_image_path}}" />
+<img src="{{user.full_image_path}}" />
 
 {% else %}
 
 
-    <img src="https://nextagram-profile-image.s3-ap-southeast-1.amazonaws.com/genius.gif" />
+<img src="https://nextagram-profile-image.s3-ap-southeast-1.amazonaws.com/genius.gif" />
 
 
 {% endif %}
 <div>
-    {% if current_user.id==user.id %} 
-    <a href="{{url_for('images.new')}}"><h1>Add Images</h1></a>
+    {% if current_user.id==user.id %}
+    <a href="{{url_for('images.new')}}">
+        <h1>Add Images</h1>
+    </a>
     {% endif %}
 
 
-    
-    {% for fanidolrow in current_user.idol %}
-    {% if user==fanidolrow.idol %}
+
+    <!-- {% for fanidolrow in current_user.idol %}
+    {% if user.id==fanidolrow.idol.id %}
     <h1>testing</h1>
 
     {# the reason why fanidolrow.idol_id and fanidolrow.idol will also print out 4 in my html... is because of the __repl__/__str__ methods under a class. when i use {{}} it is trying to print out sth. 
@@ -52,13 +54,42 @@
         <button>FOLLOW ME BABEH</button>
     </form>
 
+    {% endif %} -->
+
+    {% for fanidolrow in current_user.idol%}
+    {% if fanidolrow.idol.id==user.id and fanidolrow.is_approved==false %}
+    <button>Requested</button>
+
+    {% break %}
+    {% endif %}
+    {% endfor %}
+    {% for fanidolrow in current_user.idol%}
+    {% if fanidolrow.idol.id==user.id and fanidolrow.is_approved==true %}
+    <button>Following</button>
+
+
+    {% break %}
+
+    {% endif %}
+    {% endfor %}
+
+
+    {# try if else and include all of the 3 condition together, requested,following, ask to follow#}
+
+    {%if current_user.id!=user.id and x %}
+
+
+
+
+
+    <form action="{{url_for('users.follow' , id=user.id)}}" method="POST">
+        <button>FOLLOW ME BABEH</button>
+    </form>
     {% endif %}
 
 
-        
-    
-    {% if user.is_private and current_user.id!=user.id %}
-    <h1>Please follow me pleaseeeeeeeeeeeee </h1>
+
+
     <br>
     {# url_for doesn't actually go to the view function, it actually just return a strings, and check for the route, so the logic is like this, first it check is there a "follow" view function, then it will find create/generate the route, and whenever we pass in something using url_for, the first thing that receive the props is the route, if the route don't have the <id params> , then some error will pop up, the next thing is after the route got the id, we must also include the id as an arguement for the following view function. #}
 
@@ -66,18 +97,28 @@
 
 
 
-    {% else %}
 
 
 
 
 
-</div> 
+
+</div>
+
+
+{# there are 3 condition where we want to show our images,
+    1)when user=current_user
+    2)when use is public
+    3)user is private but approved follow request#}
+
+
+{% if user.id==current_user.id or user.is_private==false or y %}
+
 
 <div class="containe d-flex mx-3" style="width:80%; justify-content: center;">
     <div class="row">
         {% for image in user.images %}
-            
+
         <!-- <div class="card" style="width: 18rem;">
             <a href="{{url_for('donations.index' , image_id=image.id)}}"></a>
             <img src="{{image.full_image_url}}"" class="card-img-top" alt="...">
@@ -90,35 +131,36 @@
               </a>
             </div>
           </div> -->
-            <div class="col-4" style="padding-bottom: 10px;">
+        <div class="col-4" style="padding-bottom: 10px;">
 
-                <a href="{{url_for('donations.index' , image_id=image.id)}}">
-
-
-                    <img src="{{image.full_image_url}}" width="100%" >
-                </a>
-                <a href="{{url_for('donations.new' , image_id=image.id)}}">
+            <a href="{{url_for('donations.index' , image_id=image.id)}}">
 
 
-                    <button class="btn btn-primary" >Donate</button>
-                </a>
+                <img src="{{image.full_image_url}}" width="100%">
+            </a>
+            <a href="{{url_for('donations.new' , image_id=image.id)}}">
 
-            </div>
+
+                <button class="btn btn-primary">Donate</button>
+            </a>
+
+        </div>
 
 
         {% endfor%}
-        
-        
-        
+
+
+
 
 
 
     </div>
 
 </div>
+{% endif %}
 
-    {% endif %}
-    
+
+
 
 
 
